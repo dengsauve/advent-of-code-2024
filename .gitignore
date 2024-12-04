@@ -29,3 +29,4 @@ replay_pid*
 # AoC Input, very important for reasons
 */input.txt
 Day 01/input.txt
+.DS_Store

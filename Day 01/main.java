@@ -3,6 +3,10 @@ import java.io.FileReader;
 import java.util.Scanner;
 
 public class main {
+    public static int[] convertStringArrayToIntArray(String[] inArr) {
+        
+    }
+
     public static void main(String[] args) throws FileNotFoundException {
         // Read and process input
         Scanner in = new Scanner(new FileReader("input.txt"));
@@ -29,6 +33,9 @@ public class main {
         int[] firstArr = new int[firstStringArr.length];
         int[] secondArr = new int[secondStringArr.length];
 
-
+        for(int i = 0;i < numberStrs.length;i++)
+        {
+            numbers[i] = Integer.parseInt(numberStrs[i]);
+        }
     }
 }
