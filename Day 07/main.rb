@@ -6,9 +6,13 @@ def ltr_eval(xpr)
   total = xpr.shift
   xpr.each_with_index do | n, ix |
     if (ix % 2 == 0)
-      xprstr = "#{total} #{n} #{xpr[ix + 1]}"
-      # puts xprstr
-      total = eval(xprstr)
+      if n == "||"
+        total = (total.to_s + xpr[ix + 1].to_s).to_i
+      else
+        xprstr = "#{total} #{n} #{xpr[ix + 1]}"
+        # puts "Expression: #{xprstr}"
+        total = eval(xprstr)
+      end
     end
   end
   return total
@@ -31,9 +35,24 @@ input.each do | calibration |
 
     # all_instructions = (adders + multipliers).permutation(op_count).uniq # No good, too many permutations
     # puts all_instructions.inspect
+    all_instructions = []
+    (3 ** op_count).times do | num |
+      # Convert num to binary with op_count length, to_s
+      bin = num.to_s(3)
+      bin = "%0#{op_count}d" % bin
+      
+      # puts "tern: #{bin.inspect}"
+      # Then, swap 0 for + and 1 for *
+      bin.gsub! '0', '+ '
+      bin.gsub! '1', '* '
+      bin.gsub! '2', '|| '
+      # Add to all_instructions
+      # puts "converted tern: #{bin.inspect}"
+      all_instructions << bin.split(' ')
+    end
     
     all_instructions.each do | instructions |
-      # puts instructions.inspect
+      # puts "instructions: #{instructions.inspect}"
       equation = numbers.zip(instructions).flatten.compact.join(" ")
       # puts equation
       eval_result = ltr_eval(equation)
@@ -48,3 +67,5 @@ input.each do | calibration |
 end
 
 puts total_calibration_result
+
+# too low, 12839601725877 correct
